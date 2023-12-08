@@ -1,10 +1,10 @@
-package com.example.promotionEngine.Promotion.impl;
+package com.example.promotionEngine.promotion.impl;
 
-import com.example.promotionEngine.Promotion.Promotion;
+import com.example.promotionEngine.promotion.IPromotion;
 
 import java.util.Map;
 
-public class ComboFixedPrice implements Promotion {
+public class ComboFixedPrice implements IPromotion {
 
     private String itemType1;
     private String itemType2;

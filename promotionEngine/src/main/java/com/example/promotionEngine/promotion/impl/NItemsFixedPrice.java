@@ -1,10 +1,10 @@
-package com.example.promotionEngine.Promotion.impl;
+package com.example.promotionEngine.promotion.impl;
 
-import com.example.promotionEngine.Promotion.Promotion;
+import com.example.promotionEngine.promotion.IPromotion;
 
 import java.util.Map;
 
-public class NItemsFixedPrice implements Promotion {
+public class NItemsFixedPrice implements IPromotion {
 
     private String itemType;
     private int quantity;
