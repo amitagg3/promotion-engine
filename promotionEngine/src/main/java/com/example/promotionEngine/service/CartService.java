@@ -1,6 +1,7 @@
 package com.example.promotionEngine.service;
 
 import com.example.promotionEngine.entities.Promotion;
+import com.example.promotionEngine.model.Cart;
 import com.example.promotionEngine.repo.PromotionRepository;
 import com.example.promotionEngine.repo.SkuRepositroy;
 import com.example.promotionEngine.entities.Sku;
@@ -10,14 +11,16 @@ import com.example.promotionEngine.promotion.impl.NItemsFixedPrice;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
-@Component
-class PromotionEngineService {
+@Service
+public class CartService {
 
     private Map<String, Integer> unitPrices;
     private IPromotion[] IPromotionList;
@@ -28,7 +31,12 @@ class PromotionEngineService {
     @Autowired
     PromotionRepository promotionRepository;
 
-    public int calculateTotal(Map<String, Integer> cart) {
+    public int calculateTotal(List<Cart> cartReq) {
+        Map<String, Integer> cart = cartReq.stream().collect(Collectors.toMap(Cart::getSkuId, Cart::getQuantity));
+        return calculateTotal(cart);
+    }
+
+    private int calculateTotal(Map<String, Integer> cart) {
         int total = 0;
         this.IPromotionList = getPromotions();
 
@@ -49,7 +57,7 @@ class PromotionEngineService {
         return total;
     }
 
-    public Map<String, Integer> getUnitPrices(){
+    private Map<String, Integer> getUnitPrices(){
         Map<String, Integer> unitPrices = new HashMap<>();
         List<Sku> listOfSku = skuRepositroy.findAll();
         for(Sku sku: listOfSku){
@@ -58,7 +66,7 @@ class PromotionEngineService {
         return unitPrices;
     }
 
-    public IPromotion[] getPromotions(){
+    private IPromotion[] getPromotions(){
         List<Promotion> listOfPromotion=promotionRepository.findAll();
         IPromotion[] promotions=new IPromotion[listOfPromotion.size()];
         int indx = 0;

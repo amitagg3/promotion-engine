@@ -2,9 +2,10 @@ package com.example.promotionEngine.controller;
 
 import com.example.promotionEngine.entities.Promotion;
 import com.example.promotionEngine.entities.Sku;
+import com.example.promotionEngine.model.Cart;
+import com.example.promotionEngine.service.CartService;
 import com.example.promotionEngine.service.PromotionService;
 import com.example.promotionEngine.service.SkuService;
-import com.example.promotionEngine.model.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/items")
-public class Controller {
+public class PromotionEngineController {
 
     @Autowired
     SkuService skuService;
@@ -23,19 +24,22 @@ public class Controller {
     @Autowired
     PromotionService promotionService;
 
+    @Autowired
+    CartService cartService;
+
     @PostMapping("/updateSku")
-    public void updateSKUIDsAndPrice(@RequestBody List<Sku> sku){
+    public void updateSKUIDsAndPrice(@RequestBody List<Sku> sku) {
         skuService.updateSKUIDsAndPrice(sku);
     }
 
     @PostMapping("/updatePromotions")
-    public void addPromotions(@RequestBody List<Promotion> promotions){
+    public void addPromotions(@RequestBody List<Promotion> promotions) {
         promotionService.addPromotion(promotions);
     }
 
     @PostMapping("/calculateTotal")
-    public Integer calculateTotal(@RequestBody List<Cart> cart){
-        return skuService.calculateTotal(cart);
+    public Integer calculateTotal(@RequestBody List<Cart> cart) {
+        return cartService.calculateTotal(cart);
     }
 
 }

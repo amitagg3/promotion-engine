@@ -1,5 +1,6 @@
 package com.example.promotionEngine.entities;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table
 @Data
+@Builder
 public class Promotion {
 
     @Id
